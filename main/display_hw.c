@@ -87,7 +87,8 @@ static void esp_lcd_init(void* _ignored)
     esp_lcd_panel_io_handle_t io_handle = NULL;
 
 #if CONFIG_DISPLAY_PIN_BL != -1 && !defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2)                                           \
-    && !defined(CONFIG_BOARD_TYPE_TTGO_TDISPLAY) && !defined(CONFIG_BOARD_TYPE_M5_STICKC_PLUS_2)
+    && !defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD35) && !defined(CONFIG_BOARD_TYPE_TTGO_TDISPLAY)                         \
+    && !defined(CONFIG_BOARD_TYPE_M5_STICKC_PLUS_2)
     gpio_config_t bk_gpio_config = { .mode = GPIO_MODE_OUTPUT, .pin_bit_mask = 1ULL << CONFIG_DISPLAY_PIN_BL };
     ESP_ERROR_CHECK(gpio_config(&bk_gpio_config));
     ESP_ERROR_CHECK(gpio_set_level(CONFIG_DISPLAY_PIN_BL, 0));
@@ -285,7 +286,7 @@ void display_hw_draw_bitmap(int x, int y, int w, int h, const uint16_t* color_da
     const int calculatedx = x - CONFIG_DISPLAY_OFFSET_X;
     const int calculatedy = y - CONFIG_DISPLAY_OFFSET_Y;
 #if (defined(CONFIG_BOARD_TYPE_M5_CORES3) || defined(CONFIG_BOARD_TYPE_TTGO_TWATCHS3)                                  \
-    || defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2))                                                                       \
+    || defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2) || defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD35))                          \
     && defined(CONFIG_DISPLAY_FULL_FRAME_BUFFER)
     /* this is required for the virtual buttons */
     if (calculatedy >= CONFIG_DISPLAY_HEIGHT) {

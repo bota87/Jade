@@ -285,10 +285,19 @@ static void jade_camera_init(void)
 
         .jpeg_quality = 0
     };
+#if defined(CONFIG_DISPLAY_TOUCHSCREEN)
+    // On some boards the touchscreen i2c bus uses the same pins as the camera's
+    // sccb - stop it so the camera can drive them (it is restarted below),
+    // otherwise the sccb cannot claim the pins and the sensor is never found
+    touchscreen_deinit();
+#endif
     const esp_err_t err = esp_camera_init(&camera_config);
     JADE_LOGI("Camera init done");
     if (err != ESP_OK) {
         JADE_LOGE("Camera init failed with error 0x%x", err);
+#if defined(CONFIG_DISPLAY_TOUCHSCREEN)
+        touchscreen_init();
+#endif
         camera_post_exit_event_and_await_death();
     }
 
@@ -325,7 +334,7 @@ static void jade_camera_init(void)
     }
 #endif // !defined(CONFIG_ETH_USE_OPENETH) && defined(ESP_PLATFORM)
 #if defined(CONFIG_DISPLAY_TOUCHSCREEN)
-    touchscreen_deinit();
+    // Restart the touchscreen stopped before esp_camera_init() above
     touchscreen_init();
 #endif
 }

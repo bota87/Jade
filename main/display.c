@@ -186,7 +186,7 @@ void display_fill_rect(int x, int y, int w, int h, color_t color)
         JADE_LOGE(
             "display_fill_rect called with bad params (ignored) x %d y %d w %d h %d color %u\n", x, y, w, h, color);
 #if !defined(CONFIG_BOARD_TYPE_M5_CORES3) && !defined(CONFIG_BOARD_TYPE_TTGO_TWATCHS3)                                 \
-    && !defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2)
+    && !defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2) && !defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD35)
         return;
 #endif
     }
@@ -253,7 +253,7 @@ void display_init(TaskHandle_t* gui_h)
     display_hw_init(gui_h);
 
 #if defined(CONFIG_BOARD_TYPE_TTGO_TWATCHS3) || defined(CONFIG_BOARD_TYPE_M5_CORES3)                                   \
-    || defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2)
+    || defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD2) || defined(CONFIG_BOARD_TYPE_WS_TOUCH_LCD35)
 #define TOUCH_BUTTON_AREA 40
 #define TOUCH_BUTTON_MARGIN 5
 #define TOUCH_BUTTON_WIDTH 40
